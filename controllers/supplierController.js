@@ -5,7 +5,10 @@ exports.index = async(req, res) => {
     res.render('suppliers/index', { suppliers, msg: req.query.msg || null });
 };
 
-exports.newForm = (req, res) => res.render('suppliers/new');
+// Hiển thị form tạo Supplier mới
+exports.newForm = (req, res) => {
+    res.render('suppliers/form', { supplier: {} }); // ✅ Truyền supplier rỗng
+};
 
 exports.create = async(req, res) => {
     const { name, phone, address } = req.body;
@@ -13,12 +16,17 @@ exports.create = async(req, res) => {
     res.redirect('/suppliers?msg=Supplier+created');
 };
 
+// Hiển thị form edit Supplier
 exports.editForm = async(req, res) => {
-    const supplier = await Supplier.findById(req.params.id).lean();
-    if (!supplier) return res.status(404).send('Not found');
-    res.render('suppliers/edit', { supplier });
+    try {
+        const supplier = await Supplier.findById(req.params.id).lean();
+        if (!supplier) return res.status(404).send('Supplier not found');
+        res.render('suppliers/form', { supplier }); // ✅ Truyền supplier từ DB
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
 };
-
 exports.update = async(req, res) => {
     const { name, phone, address } = req.body;
     await Supplier.findByIdAndUpdate(req.params.id, { name, phone, address });

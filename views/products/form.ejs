@@ -4,20 +4,20 @@
         <%= product && product._id ? 'Edit Product' : 'New Product' %>
     </h1>
 
-    <form method="post" action="<%= product._id ? '/products/' + product._id + '?_method=PUT' : '/products' %>">
+    <form method="post" action="<%= product && product._id ? '/products/' + product._id + '?_method=PUT' : '/products' %>">
         <div>
             <label>Name</label>
-            <input name="name" value="<%= product.name || '' %>" placeholder="Product name" required>
+            <input type="text" name="name" value="<%= product.name || '' %>" required>
         </div>
 
         <div>
             <label>Price</label>
-            <input name="price" value="<%= product.price || 0 %>" type="number" step="0.01">
+            <input type="number" step="0.01" name="price" value="<%= product.price != null ? product.price : '' %>">
         </div>
 
         <div>
             <label>Quantity</label>
-            <input name="quantity" type="number" min="0" value="<%= product.quantity != null ? product.quantity : 0 %>">
+            <input type="number" min="0" name="quantity" value="<%= product.quantity != null ? product.quantity : '' %>">
         </div>
 
         <div>
@@ -25,12 +25,16 @@
             <select name="supplier">
       <option value="">-- Select supplier --</option>
       <% suppliers.forEach(s => { %>
-        <option value="<%= s._id %>" <%= product.supplier == s._id ? 'selected' : '' %>><%= s.name %></option>
+        <option value="<%= s._id %>"
+          <%= product.supplier && product.supplier.toString() === s._id.toString() ? 'selected' : '' %>>
+          <%= s.name %>
+        </option>
       <% }) %>
     </select>
         </div>
 
-        <button class="btn btn-primary">Save</button>
+        <button class="btn btn-primary"><%= product && product._id ? 'Update' : 'Create' %></button>
+        <a href="/products" class="btn btn-danger">Cancel</a>
     </form>
 
     <%- include('../partials/footer') %>

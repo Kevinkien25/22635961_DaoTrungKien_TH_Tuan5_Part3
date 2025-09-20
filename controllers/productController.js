@@ -6,9 +6,15 @@ exports.index = async(req, res) => {
     res.render('products/index', { products, msg: req.query.msg || null });
 };
 
+// Hiển thị form tạo Product mới
 exports.newForm = async(req, res) => {
-    const suppliers = await Supplier.find().lean();
-    res.render('products/new', { suppliers });
+    try {
+        const suppliers = await Supplier.find().lean();
+        res.render('products/form', { product: {}, suppliers }); // ✅ product rỗng
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
 };
 
 exports.create = async(req, res) => {
@@ -17,11 +23,17 @@ exports.create = async(req, res) => {
     res.redirect('/products?msg=Product+created');
 };
 
+// Hiển thị form edit Product
 exports.editForm = async(req, res) => {
-    const product = await Product.findById(req.params.id).lean();
-    if (!product) return res.status(404).send('Not found');
-    const suppliers = await Supplier.find().lean();
-    res.render('products/edit', { product, suppliers });
+    try {
+        const product = await Product.findById(req.params.id).lean();
+        if (!product) return res.status(404).send('Product not found');
+        const suppliers = await Supplier.find().lean();
+        res.render('products/form', { product, suppliers }); // ✅ truyền product từ DB
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
 };
 
 exports.update = async(req, res) => {
