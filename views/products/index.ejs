@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+
+    <% if (typeof msg !== 'undefined' && msg) { %>
+        <div class="alert alert-success">
+            <%= msg.replace(/\+/g, ' ') %>
+        </div>
+        <% } %>
+
+            <h1>Products</h1>
+            <a href="/products/new" class="btn">New Product</a>
+
+            <% if (products && products.length) { %>
+                <table class="list-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Supplier</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach(p => { %>
+                            <tr>
+                                <td>
+                                    <%= p.name %>
+                                </td>
+                                <td>
+                                    <%= p.price %>
+                                </td>
+                                <td>
+                                    <%= p.supplier ? p.supplier.name : '' %>
+                                </td>
+                                <td>
+                                    <a class="btn" href="/products/<%= p._id %>/edit">Edit</a>
+                                    <form method="POST" action="/products/<%= p._id %>?_method=DELETE" style="display:inline">
+                                        <button class="btn danger" type="submit" onclick="return confirm('Delete product?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+                <% } else { %>
+                    <p>No products</p>
+                    <% } %>
+
+                        <%- include('../partials/footer') %>

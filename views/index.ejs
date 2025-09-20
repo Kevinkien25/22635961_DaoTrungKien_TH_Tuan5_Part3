@@ -1,0 +1,91 @@
+<%- include('partials/header') %>
+
+    <% if (typeof msg !== 'undefined' && msg) { %>
+        <div class="alert success">
+            <%= msg.replace(/\+/g, ' ') %>
+        </div>
+        <% } %>
+
+            <h1>Dashboard</h1>
+
+            <div class="dashboard">
+                <section class="card">
+                    <h2>Products <a href="/products/new">[New]</a> <a href="/products">[List]</a></h2>
+                    <% if (typeof products !== 'undefined' && products.length) { %>
+                        <table class="list-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Supplier</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% products.forEach(p => { %>
+                                    <tr>
+                                        <td>
+                                            <%= p.name %>
+                                        </td>
+                                        <td>
+                                            <%= p.price %>
+                                        </td>
+                                        <td>
+                                            <%= p.supplier ? p.supplier.name : '' %>
+                                        </td>
+                                        <td>
+                                            <a class="btn" href="/products/<%= p._id %>/edit">Edit</a>
+                                            <form method="POST" action="/products/<%= p._id %>?_method=DELETE" style="display:inline">
+                                                <button class="btn danger" type="submit" onclick="return confirm('Delete product?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                        <% } else { %>
+                            <p>No products</p>
+                            <% } %>
+                </section>
+
+                <section class="card">
+                    <h2>Suppliers <a href="/suppliers/new">[New]</a> <a href="/suppliers">[List]</a></h2>
+                    <% if (typeof suppliers !== 'undefined' && suppliers.length) { %>
+                        <table class="list-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% suppliers.forEach(s => { %>
+                                    <tr>
+                                        <td>
+                                            <%= s.name %>
+                                        </td>
+                                        <td>
+                                            <%= s.phone || '' %>
+                                        </td>
+                                        <td>
+                                            <%= s.address || '' %>
+                                        </td>
+                                        <td>
+                                            <a class="btn" href="/suppliers/<%= s._id %>/edit">Edit</a>
+                                            <form method="POST" action="/suppliers/<%= s._id %>?_method=DELETE" style="display:inline">
+                                                <button class="btn danger" type="submit" onclick="return confirm('Delete supplier?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                        <% } else { %>
+                            <p>No suppliers</p>
+                            <% } %>
+                </section>
+            </div>
+
+            <%- include('partials/footer') %>

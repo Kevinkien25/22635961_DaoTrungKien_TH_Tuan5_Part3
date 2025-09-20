@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+
+    <h1>New Product</h1>
+
+    <form action="/products" method="POST">
+        <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" required />
+        </div>
+
+        <div>
+            <label for="price">Price</label>
+            <input id="price" name="price" type="number" step="0.01" required />
+        </div>
+
+        <div>
+            <label for="supplier">Supplier</label>
+            <select id="supplier" name="supplier">
+            <option value="">-- None --</option>
+            <% if (typeof suppliers !== 'undefined') { %>
+                <% suppliers.forEach(s => { %>
+                    <option value="<%= s._id %>"><%= s.name %></option>
+                <% }) %>
+            <% } %>
+        </select>
+        </div>
+
+        <button type="submit">Create</button>
+        <a href="/">Cancel</a>
+    </form>
+
+    <%- include('../partials/footer') %>

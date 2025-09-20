@@ -1,0 +1,121 @@
+openapi: 3.0.1
+info:
+  title: MVC CRUD Product & Supplier API
+  version: "1.0.0"
+  description: REST API for managing products and suppliers
+servers:
+  - url: http://localhost:{port}
+    variables:
+      port:
+        default: "3000"
+paths:
+  /products:
+    get:
+      summary: List products
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create product
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '302':
+          description: Redirect after creation
+  /products/{id}:
+    put:
+      summary: Update product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '302':
+          description: Redirect after update
+    delete:
+      summary: Delete product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Redirect after delete
+  /suppliers:
+    get:
+      summary: List suppliers
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create supplier
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierInput'
+      responses:
+        '302':
+          description: Redirect after creation
+  /suppliers/{id}:
+    put:
+      summary: Update supplier
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierInput'
+      responses:
+        '302':
+          description: Redirect after update
+    delete:
+      summary: Delete supplier
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Redirect after delete
+components:
+  schemas:
+    ProductInput:
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+        supplier:
+          type: string
+    SupplierInput:
+      type: object
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string

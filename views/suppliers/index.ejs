@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+
+    <% if (typeof msg !== 'undefined' && msg) { %>
+        <div class="alert alert-success">
+            <%= msg.replace(/\+/g, ' ') %>
+        </div>
+        <% } %>
+
+            <h1>Suppliers</h1>
+            <a href="/suppliers/new" class="btn">New Supplier</a>
+
+            <% if (suppliers && suppliers.length) { %>
+                <table class="list-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% suppliers.forEach(s => { %>
+                            <tr>
+                                <td>
+                                    <%= s.name %>
+                                </td>
+                                <td>
+                                    <%= s.phone || '' %>
+                                </td>
+                                <td>
+                                    <%= s.address || '' %>
+                                </td>
+                                <td>
+                                    <a class="btn" href="/suppliers/<%= s._id %>/edit">Edit</a>
+                                    <form method="POST" action="/suppliers/<%= s._id %>?_method=DELETE" style="display:inline">
+                                        <button class="btn danger" type="submit" onclick="return confirm('Delete supplier?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+                <% } else { %>
+                    <p>No suppliers</p>
+                    <% } %>
+
+                        <%- include('../partials/footer') %>

@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+
+    <h1>Edit Supplier</h1>
+
+    <form action="/suppliers/<%= supplier._id %>?_method=PUT" method="POST">
+        <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" value="<%= supplier.name %>" required />
+        </div>
+
+        <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" value="<%= supplier.phone || '' %>" />
+        </div>
+
+        <div>
+            <label for="address">Address</label>
+            <input id="address" name="address" value="<%= supplier.address || '' %>" />
+        </div>
+
+        <button type="submit">Update</button>
+        <a href="/">Cancel</a>
+    </form>
+
+    <%- include('../partials/footer') %>
