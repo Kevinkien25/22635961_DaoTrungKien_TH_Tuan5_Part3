@@ -1,0 +1,13 @@
+<%- include('../partials/header') %>
+
+    <h1>
+        <%= supplier && supplier._id ? 'Edit Supplier' : 'New Supplier' %>
+    </h1>
+    <form method="post" action="<%= supplier._id ? '/suppliers/' + supplier._id + '?_method=PUT' : '/suppliers' %>">
+        <input name="name" value="<%= supplier.name || '' %>" placeholder="Supplier name" required>
+        <input name="phone" value="<%= supplier.phone || '' %>" placeholder="Phone">
+        <input name="address" value="<%= supplier.address || '' %>" placeholder="Address">
+        <button>Save</button>
+    </form>
+
+    <%- include('../partials/footer') %>

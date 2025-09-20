@@ -1,19 +1,22 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
-    password: { type: String, required: true }
-});
-// Hash password trước khi lưu (nếu cần thêm logic ở đây)
-userSchema.pre("save", async function(next) {
-    if (this.isModified("password")) {
-        this.password = await bcrypt.hash(this.password, 10);
-    }
+    password: { type: String, required: true },
+    email: String,
+    phone: String
+}, { timestamps: true });
+
+userSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) return next();
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
     next();
 });
-// So sánh password (nếu cần thêm logic ở đây)
-userSchema.methods.comparePassword = async function(password) {
-    return bcrypt.compare(password, this.password);
+
+userSchema.methods.comparePassword = async function(candidate) {
+    return bcrypt.compare(candidate, this.password);
 };
-module.exports = mongoose.model("User", userSchema);
+
+module.exports = mongoose.model('User', userSchema);

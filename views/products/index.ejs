@@ -1,48 +1,51 @@
 <%- include('../partials/header') %>
 
-    <% if (typeof msg !== 'undefined' && msg) { %>
-        <div class="alert alert-success">
-            <%= msg.replace(/\+/g, ' ') %>
-        </div>
-        <% } %>
+    <h1>Products</h1>
 
-            <h1>Products</h1>
-            <a href="/products/new" class="btn">New Product</a>
+    <div style="margin-bottom:10px;">
+        <a href="/products/new" class="btn btn-primary">+ Add Product</a>
+    </div>
 
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Supplier</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
             <% if (products && products.length) { %>
-                <table class="list-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Supplier</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% products.forEach(p => { %>
+                <% products.forEach(p => { %>
+                    <tr>
+                        <td>
+                            <%= p.name %>
+                        </td>
+                        <td>
+                            <%= p.price %>
+                        </td>
+                        <td>
+                            <%= p.quantity %>
+                        </td>
+                        <td>
+                            <%= p.supplier ? p.supplier.name : '' %>
+                        </td>
+                        <td>
+                            <a href="/products/<%= p._id %>/edit" class="btn btn-warning">Edit</a>
+                            <form method="post" action="/products/<%= p._id %>?_method=DELETE" style="display:inline">
+                                <button class="btn btn-danger" onclick="return confirm('Delete product?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+                        <% } else { %>
                             <tr>
-                                <td>
-                                    <%= p.name %>
-                                </td>
-                                <td>
-                                    <%= p.price %>
-                                </td>
-                                <td>
-                                    <%= p.supplier ? p.supplier.name : '' %>
-                                </td>
-                                <td>
-                                    <a class="btn" href="/products/<%= p._id %>/edit">Edit</a>
-                                    <form method="POST" action="/products/<%= p._id %>?_method=DELETE" style="display:inline">
-                                        <button class="btn danger" type="submit" onclick="return confirm('Delete product?')">Delete</button>
-                                    </form>
-                                </td>
+                                <td colspan="5">No products found.</td>
                             </tr>
-                            <% }) %>
-                    </tbody>
-                </table>
-                <% } else { %>
-                    <p>No products</p>
-                    <% } %>
+                            <% } %>
+        </tbody>
+    </table>
 
-                        <%- include('../partials/footer') %>
+    <%- include('../partials/footer') %>

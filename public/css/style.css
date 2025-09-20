@@ -1,124 +1,62 @@
-/* ...existing code... */
-
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-    color: #333;
 }
 
-
-/* NAVIGATION */
-
 header nav {
-    background-color: #000;
-    /* nền đen */
-    padding: 10px 16px;
-    display: flex;
-    justify-content: space-between;
-    /* tách trái-phải */
-    align-items: center;
+    background: #333;
+    padding: 10px;
 }
 
 header nav a {
     color: #fff;
-    /* chữ trắng mặc định */
+    margin-right: 10px;
     text-decoration: none;
-    margin: 0 8px;
-    font-weight: 500;
 }
 
-header nav .right-links a {
-    color: #aaa;
-    /* Products & Suppliers màu xám */
-}
-
-header nav a:hover {
-    color: #ffd700;
-    /* hover thành vàng nổi bật */
-}
-
-
-/* FOOTER */
-
-footer {
-    background-color: #000;
-    /* nền đen */
-    color: #fff;
-    /* chữ trắng */
-    text-align: center;
-    padding: 12px;
-    margin-top: 24px;
-    border-top: 1px solid #333;
-    font-size: 13px;
-}
-
-
-/* DASHBOARD */
-
-.dashboard {
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-
-.card {
-    border: 1px solid #e0e0e0;
-    padding: 12px;
-    border-radius: 6px;
-    background: #fff;
-    min-width: 360px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-}
-
-.list-table {
+table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 8px;
+    margin-top: 10px;
 }
 
-.list-table thead th {
-    background: #f7f7f7;
-    text-align: left;
-    padding: 8px 10px;
-    border: 1px solid #ddd;
-}
-
-.list-table tbody td {
-    padding: 8px 10px;
-    border: 1px solid #ddd;
-    vertical-align: middle;
-}
-
-.list-table tbody tr:nth-child(even) {
-    background: #fbfbfb;
+td,
+th {
+    border: 1px solid #ccc;
+    padding: 6px;
 }
 
 .btn {
     display: inline-block;
-    padding: 6px 10px;
-    margin-right: 6px;
-    background: #1976d2;
-    color: white;
+    padding: 6px 12px;
+    margin: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
     text-decoration: none;
-    border-radius: 4px;
-    font-size: 13px;
-}
-
-.btn.danger {
-    background: #d32f2f;
-    border: none;
     cursor: pointer;
+    border: none;
+    transition: 0.2s;
 }
 
-.alert {
-    padding: 10px 12px;
-    margin-bottom: 12px;
-    border-radius: 4px;
+.btn:hover {
+    opacity: 0.9;
 }
 
-.alert.success {
-    background: #e6f4ea;
-    color: #1b5e20;
-    border: 1px solid #c8e6c9;
+
+/* Màu sắc từng loại */
+
+.btn-primary {
+    background: #007bff;
+    color: #fff;
+}
+
+.btn-warning {
+    background: #ffc107;
+    color: #000;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: #fff;
 }
